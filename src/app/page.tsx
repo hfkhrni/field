@@ -159,7 +159,6 @@ export default function Home() {
     if (!trackInput) {
       return;
     }
-
     const trackURL = new URL(trackInput);
     if (trackURL.hostname !== "open.spotify.com") {
       throw new Error("Not a spotify url");
