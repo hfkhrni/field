@@ -79,7 +79,6 @@ export default function Home() {
     console.log("hi");
     if (recommendations.length >= 1000) return;
     refetch();
-    setRecommendations([...recommendations, ...data.tracks]);
   }, [isIntersecting]);
 
   const { isLoading, error, data, refetch } = useQuery({
@@ -108,7 +107,8 @@ export default function Home() {
       },
     });
     if (!res.data) return;
-    setRecommendations(res.data.tracks);
+    const data = res.data;
+    setRecommendations([...recommendations, ...data.tracks]);
     return res.data;
   }
 
@@ -183,7 +183,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex justify-between">
+      <div className="flex justify-between font-mono">
         {isLoggedIn ? (
           <>
             <form
@@ -203,9 +203,9 @@ export default function Home() {
                 Cookies.remove("token");
                 router.refresh();
               }}
-              className="hover:bg-blue-300 mx-2 font-mono py-1 px-2"
+              className="hover:bg-blue-300 mx-2 font-mono"
             >
-              log out
+              OUT
             </button>
           </>
         ) : (
@@ -239,7 +239,7 @@ export default function Home() {
                     playTrack(t["id"]);
                     togglePlay("next");
                   }}
-                  key={`${t.id}`}
+                  key={`${t.id}-${index}`}
                   ref={t.id === last ? ref : null}
                 >
                   <div>
